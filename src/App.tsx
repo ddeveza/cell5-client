@@ -31,7 +31,7 @@ const App: FC = () => {
   return (
     <div className="App">
       <Header />
-      <AddBookMark />
+      <AddBookMark  setListOfBookmark={setListOfBookmark}/>
       <ListBookMark listOfBookmark={listOfBookmark}/>
     {/*   <ul>
 

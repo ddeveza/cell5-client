@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { useState  ,Dispatch, SetStateAction} from "react";
 import ModalForm from "./Utility/ModalForm";
 import { Button, Typography , Box } from "@material-ui/core";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
-const AddBookMark: React.FC = () => {
+
+
+type Props = { setListOfBookmark: Dispatch<any>; };
+
+
+
+const AddBookMark: React.FC <Props>= ({setListOfBookmark} ) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleModalClick = () => {
@@ -17,7 +23,7 @@ const AddBookMark: React.FC = () => {
         <AddCircleOutlineIcon/>
         <Typography>Add</Typography>
       </Button>
-      <ModalForm isOpen={isOpen} handleModalClick={handleModalClick} />
+      <ModalForm isOpen={isOpen} handleModalClick={handleModalClick}  setListOfBookmark={setListOfBookmark}/>
     </Box>
   );
 };

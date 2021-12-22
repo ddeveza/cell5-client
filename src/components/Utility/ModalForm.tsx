@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,Dispatch, SetStateAction } from "react";
 import axios from 'axios';
 import {
   Modal,
@@ -8,11 +8,13 @@ import {
   Typography,
   makeStyles,
 } from "@material-ui/core";
+import { AnalyticsSharp } from "@mui/icons-material";
 
 
 interface ModalInterface {
   isOpen: boolean;
   handleModalClick: () => void;
+  setListOfBookmark: Dispatch<any>;
 }
 
 interface VideoData {
@@ -35,7 +37,7 @@ const styles = makeStyles({
   },
 });
 
-const ModalForm: React.FC<ModalInterface> = ({ isOpen, handleModalClick }) => {
+const ModalForm: React.FC<ModalInterface> = ({ isOpen, handleModalClick  ,setListOfBookmark}) => {
   const [video, setVideo] = useState<VideoData>({
     title: "",
     link: "",
@@ -44,9 +46,19 @@ const ModalForm: React.FC<ModalInterface> = ({ isOpen, handleModalClick }) => {
   });
   const handleSaveVideo = async () => {
     await axios.post('http://localhost:3001/' , video)
-            .then(res => console.log("successfully save"))
+            .then(res => {
+              setListOfBookmark(
+                (val:any) => {
+                  return [...val , res.data];
+                }
+              );
+              return console.log('Successfully Save')
+            })
             .catch(err => console.log(err))
-    handleModalClick();
+    
+
+    
+            handleModalClick();
   };
   const handleChange = (
     e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>
