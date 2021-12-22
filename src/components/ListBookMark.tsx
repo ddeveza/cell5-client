@@ -13,6 +13,8 @@ interface Bookmarks {
 
 interface List {
   listOfBookmark: Bookmarks[];
+  search: string;
+  setListOfBookmark:React.Dispatch<any>;
 }
 
 const bookmarksContainer = {
@@ -23,13 +25,19 @@ const bookmarksContainer = {
   margin: "auto",
 };
 
-const ListBookMark: React.FC<List> = ({ listOfBookmark }) => {
+const ListBookMark: React.FC<List> = ({ listOfBookmark, search ,setListOfBookmark}) => {
   return (
     <Box sx={bookmarksContainer}>
       {listOfBookmark.length ? (
-        listOfBookmark.map((bookmark, index) => {
-          return <Bookmark key={bookmark.id} bookmark={bookmark} />;
-        })
+        listOfBookmark
+          .filter((val, index) => {
+            if (search === "") return val;
+            else if (val.title.toLocaleLowerCase().includes(search.toLocaleLowerCase()))return val; 
+            return null; 
+          })
+          ?.map((bookmark, index) => {
+            return <Bookmark key={bookmark.id} bookmark={bookmark} setListOfBookmark={setListOfBookmark}/>;
+          })
       ) : (
         <h3>No Bookmark Found. Please Click Add.</h3>
       )}

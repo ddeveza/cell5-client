@@ -16,6 +16,7 @@ interface Bookmarks {
 const App: FC = () => {
 
   const [listOfBookmark, setListOfBookmark] = useState<Bookmarks[]>([]);
+  const [search, setSearch] = useState<string>("");
 
   useEffect(() => {
       axios.get('http://localhost:3001/')
@@ -23,16 +24,15 @@ const App: FC = () => {
              // console.log(res);
              if (res.data !== 'Empty Data') setListOfBookmark (await res.data);
            })
-           .catch(err=>console.log(err))
-      
-     
+           .catch(err=>console.log(err)) 
   }, [])
 
   return (
     <div className="App">
-      <Header />
+      <Header search={search} setSearch={setSearch}/>
       <AddBookMark  setListOfBookmark={setListOfBookmark}/>
-      <ListBookMark listOfBookmark={listOfBookmark}/>
+      <ListBookMark search={search} listOfBookmark={listOfBookmark} setListOfBookmark={setListOfBookmark}/>
+     
     {/*   <ul>
 
     

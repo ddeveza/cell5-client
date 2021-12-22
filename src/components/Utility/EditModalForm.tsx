@@ -1,20 +1,6 @@
-import React, { useState, Dispatch } from "react";
-import axios from "axios";
 import { Modal, Button, TextField, Box, Typography, makeStyles } from "@material-ui/core";
-
-interface ModalInterface {
-  isOpen: boolean;
-  handleModalClick: () => void;
-  setListOfBookmark: Dispatch<any>;
-}
-
-interface VideoData {
-  title: string;
-  link: string;
-  summary: string;
-  tag: string;
-}
-
+import axios from "axios";
+import { useState } from "react";
 const styles = makeStyles({
   textField: {
     paddingBottom: "20px",
@@ -28,33 +14,60 @@ const styles = makeStyles({
   },
 });
 
-const ModalForm: React.FC<ModalInterface> = ({ isOpen, handleModalClick, setListOfBookmark }) => {
-  const [video, setVideo] = useState<VideoData>({
-    title: "",
-    link: "",
-    summary: "",
-    tag: "#",
-  });
-  const handleSaveVideo = async () => {
-    await axios
-      .post("http://localhost:3001/", video)
-      .then((res) => {
-        setListOfBookmark((val: any) => {
-          return [res.data, ...val];
-        });
-        return console.log("Successfully Save");
-      })
-      .catch((err) => console.log(err));
+interface Bookmarks {
+  id?: number;
+  title: string;
+  link: string;
+  summary: string;
+  thumbnail?: string;
+  tag: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
 
-    handleModalClick();
-  };
+type Props = {
+  isOpen: boolean;
+  handleModalClick: () => void;
+  bookmark: Bookmarks;
+  setListOfBookmark: React.Dispatch<any>;
+};
+
+const EditModalForm: React.FC<Props> = ({ isOpen, handleModalClick, bookmark, setListOfBookmark }) => {
+  const [video, setVideo] = useState<Bookmarks>({
+    ...bookmark,
+  });
+
   const handleChange = (e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const newValue = e.currentTarget.value;
     const name = e.currentTarget.name;
 
-    setVideo((prev) => {
+    setVideo((prev: any) => {
       return { ...prev, [name]: newValue };
     });
+  };
+
+  const handleSaveVideo = async () => {
+    await axios
+      .put("http://localhost:3001/", video)
+      .then((res: any) => {
+        let data = res.data;
+        setVideo((prev: any) => {
+          return { ...prev, data };
+        });
+        axios
+          .get("http://localhost:3001/")
+          .then(async (res) => {
+            // console.log(res);
+            if (res.data !== "Empty Data") setListOfBookmark(await res.data);
+            
+          })
+          .catch((err) => console.log(err));
+
+        return console.log("Successfully Save");
+      })
+      .catch((err: any) => console.log(err));
+
+    handleModalClick();
   };
   const classes = styles();
   const boxStyle = {
@@ -63,7 +76,7 @@ const ModalForm: React.FC<ModalInterface> = ({ isOpen, handleModalClick, setList
     left: "50%",
     transform: "translate(-50%, 10%)",
     width: "400px",
-    height: "500px",
+    height: "500px" /*  */,
     bgcolor: "background.paper",
     display: "flex",
     flexDirection: "column",
@@ -91,7 +104,7 @@ const ModalForm: React.FC<ModalInterface> = ({ isOpen, handleModalClick, setList
     <Modal open={isOpen} onClose={handleModalClick} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
       <Box sx={boxStyle}>
         <Box sx={{ display: "flex", flexDirection: "row" }}>
-          <Typography>Add Youtube Link</Typography>
+          <Typography>Edit Youtube Link</Typography>
           <Button onClick={handleModalClick} className={classes.closeBtn}>
             <Typography>X</Typography>
           </Button>
@@ -102,14 +115,12 @@ const ModalForm: React.FC<ModalInterface> = ({ isOpen, handleModalClick, setList
           <TextField className={classes.textField} id="outlined-multiline-static" label="Summary" multiline rows={5} value={video.summary} name="summary" onChange={handleChange} />
           <TextField className={classes.textField} id="outlined-basic" label="Tag" variant="outlined" value={video.tag} name="tag" onChange={handleChange} />
         </Box>
-        <Box sx={saveBtn}>
-          <Button variant="contained" onClick={handleSaveVideo}>
-            Save
-          </Button>
+        <Box sx={saveBtn} onClick={handleSaveVideo}>
+          <Button variant="contained">Save</Button>
         </Box>
       </Box>
     </Modal>
   );
 };
 
-export default ModalForm;
+export default EditModalForm;
