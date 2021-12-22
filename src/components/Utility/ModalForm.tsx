@@ -49,7 +49,7 @@ const ModalForm: React.FC<ModalInterface> = ({ isOpen, handleModalClick  ,setLis
             .then(res => {
               setListOfBookmark(
                 (val:any) => {
-                  return [...val , res.data];
+                  return [res.data, ...val];
                 }
               );
               return console.log('Successfully Save')
