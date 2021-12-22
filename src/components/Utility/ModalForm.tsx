@@ -42,6 +42,13 @@ const ModalForm: React.FC<ModalInterface> = ({ isOpen, handleModalClick, setList
         setListOfBookmark((val: any) => {
           return [res.data, ...val];
         });
+
+        setVideo({
+          title: "",
+          link: "",
+          summary: "",
+          tag: "#",
+        });
         return console.log("Successfully Save");
       })
       .catch((err) => console.log(err));
