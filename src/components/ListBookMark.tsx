@@ -16,23 +16,25 @@ interface List {
 }
 
 const bookmarksContainer = {
-  position:'realative',
+  position: "realative",
   display: "flex",
   flexWrap: "wrap",
-  width: '1280px',
-  margin:'auto'
+  width: "1280px",
+  margin: "auto",
 };
 
 const ListBookMark: React.FC<List> = ({ listOfBookmark }) => {
   return (
-   
-      <Box sx={bookmarksContainer}>
-        {listOfBookmark.length &&
-          listOfBookmark.map((bookmark, index) => {
-            return <Bookmark  key={bookmark.id}  bookmark={bookmark} />;
-          })}
-      </Box>
- 
+    <Box sx={bookmarksContainer}>
+      {listOfBookmark.length ? (
+        listOfBookmark.map((bookmark, index) => {
+          return <Bookmark key={bookmark.id} bookmark={bookmark} />;
+        })
+      ) : (
+        <h3>No Bookmark Found. Please Click Add.</h3>
+      )}
+    </Box>
+
     /*  listOfBookmark.length && listOfBookmark.map( (bookmark,index)=>{
            return console.log(bookmark.title)
         }) */

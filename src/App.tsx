@@ -21,7 +21,7 @@ const App: FC = () => {
       axios.get('http://localhost:3001/')
            .then(async res=>{
              // console.log(res);
-              setListOfBookmark (await res.data);
+             if (res.data !== 'Empty Data') setListOfBookmark (await res.data);
            })
            .catch(err=>console.log(err))
       
