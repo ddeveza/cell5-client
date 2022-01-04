@@ -43,7 +43,7 @@ const Header: React.FC<Props> = ({search , setSearch}) => {
         marginBottom: "20px",
       }}
     >
-      <h1 style={headerStyle}>Bookmarks for Youtube Programming Tutorial</h1>
+      <h1 data-test='main-title' style={headerStyle}>Bookmarks for Youtube Programming Tutorial</h1>
       <Box sx={{ alignSelf: "center" }}>
         <input
           data-test = "search-box"

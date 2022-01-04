@@ -18,7 +18,7 @@ const AddBookMark: React.FC <Props>= ({setListOfBookmark} ) => {
 
   return (
     <Box sx={{display:'flex', justifyContent:'space-around' ,marginBottom:'20px'}}>
-      <Button onClick={handleModalClick}>
+      <Button data-test="button-add" onClick={handleModalClick}>
 
         <AddCircleOutlineIcon/>
         <Typography>Add</Typography>
