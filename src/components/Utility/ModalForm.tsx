@@ -104,10 +104,10 @@ const ModalForm: React.FC<ModalInterface> = ({ isOpen, handleModalClick, setList
           </Button>
         </Box>
         <Box sx={formStyle}>
-          <TextField className={classes.textField} id="outlined-basic" label="Title" variant="outlined" value={video.title} name="title" onChange={handleChange} />
-          <TextField type="url" className={classes.textField} id="outlined-basic" label="Link" variant="outlined" value={video.link} name="link" onChange={handleChange} />
-          <TextField className={classes.textField} id="outlined-multiline-static" label="Summary" multiline rows={5} value={video.summary} name="summary" onChange={handleChange} />
-          <TextField className={classes.textField} id="outlined-basic" label="Tag" variant="outlined" value={video.tag} name="tag" onChange={handleChange} />
+          <TextField data-test="text-title" className={classes.textField} id="outlined-basic" label="Title" variant="outlined" value={video.title} name="title" onChange={handleChange} />
+          <TextField data-test="text-link" type="url" className={classes.textField} id="outlined-basic" label="Link" variant="outlined" value={video.link} name="link" onChange={handleChange} />
+          <TextField data-test="text-summary" className={classes.textField} id="outlined-multiline-static" label="Summary" multiline rows={5} value={video.summary} name="summary" onChange={handleChange} />
+          <TextField data-test="text-tag" className={classes.textField} id="outlined-basic" label="Tag" variant="outlined" value={video.tag} name="tag" onChange={handleChange} />
         </Box>
         <Box sx={saveBtn}>
           <Button variant="contained" onClick={handleSaveVideo}>

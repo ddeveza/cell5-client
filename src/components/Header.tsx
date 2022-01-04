@@ -46,11 +46,13 @@ const Header: React.FC<Props> = ({search , setSearch}) => {
       <h1 style={headerStyle}>Bookmarks for Youtube Programming Tutorial</h1>
       <Box sx={{ alignSelf: "center" }}>
         <input
+          data-test = "search-box"
           type="text"
           placeholder="Search Title....."
           className={classes.searchBarStyle}
           value = {search}
           onChange = {handleChange}
+          
         />
         <SearchIcon />
       </Box>

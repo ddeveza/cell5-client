@@ -72,7 +72,7 @@ const BookMark: React.FC<Bookmark> = ({ bookmark, setListOfBookmark }) => {
   const clasess = styles();
   return (
     <Box sx={bookmarkStyle}>
-      <Box onClick={() => handleOnclick(bookmark.link)}>
+      <Box data-test="gotoPage-link" onClick={() => handleOnclick(bookmark.link)}>
         <Typography className={clasess.titleStyle}>{bookmark.title}</Typography>
         <img src={bookmark.thumbnail} alt="thumbnail" style={{ height: "250px", width: "300px" }} />
         <Box sx={{ p: 2 }}>
@@ -88,10 +88,10 @@ const BookMark: React.FC<Bookmark> = ({ bookmark, setListOfBookmark }) => {
         </Typography>
       </Box>
       <Box sx={{ p: 1, position: "absolute", top: "440px", right: "20px" }}>
-        <Button onClick={handleModalClick}>
+        <Button data-test="button-edit" onClick={handleModalClick}>
           <Typography>EDIT</Typography>
         </Button>
-        <Button onClick={() => handleDelete(bookmark.id)}>
+        <Button data-test="button-delete" onClick={() => handleDelete(bookmark.id)}>
           <Typography>DELETE</Typography>
         </Button>
       </Box>
