@@ -1,21 +1,7 @@
-import Bookmark from "../components/Bookmark";
 import { Box } from "@material-ui/core";
-interface Bookmarks {
-  id: number;
-  title: string;
-  link: string;
-  summary: string;
-  thumbnail: string;
-  tag: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface List {
-  listOfBookmark: Bookmarks[];
-  search: string;
-  setListOfBookmark:React.Dispatch<any>;
-}
+import { useContext } from "react";
+import Bookmark from "../components/Bookmark";
+import { BookmarkContext } from "../context/BookmarkContext";
 
 const bookmarksContainer = {
   position: "realative",
@@ -25,27 +11,19 @@ const bookmarksContainer = {
   margin: "auto",
 };
 
-const ListBookMark: React.FC<List> = ({ listOfBookmark, search ,setListOfBookmark}) => {
+const ListBookMark = () => {
+  const { bookmarks } = useContext(BookmarkContext);
+
   return (
     <Box sx={bookmarksContainer}>
-      {listOfBookmark.length ? (
-        listOfBookmark
-          .filter((val, index) => {
-            if (search === "") return val;
-            else if (val.title.toLocaleLowerCase().includes(search.toLocaleLowerCase()))return val; 
-            return null; 
-          })
-          ?.map((bookmark, index) => {
-            return <Bookmark key={bookmark.id} bookmark={bookmark} setListOfBookmark={setListOfBookmark}/>;
-          })
+      {bookmarks.length ? (
+        bookmarks?.map((bookmark, index) => {
+          return <Bookmark key={bookmark.id} bookmark={bookmark} />;
+        })
       ) : (
         <h3>No Bookmark Found. Please Click Add.</h3>
       )}
     </Box>
-
-    /*  listOfBookmark.length && listOfBookmark.map( (bookmark,index)=>{
-           return console.log(bookmark.title)
-        }) */
   );
 };
 

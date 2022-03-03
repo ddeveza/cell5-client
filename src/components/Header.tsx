@@ -1,7 +1,5 @@
-import { Box } from "@material-ui/core";
+import { Box, makeStyles } from "@material-ui/core";
 import SearchIcon from "@mui/icons-material/Search";
-import { makeStyles } from "@material-ui/core";
-import { Dispatch } from "react";
 const styles = makeStyles({
   searchBarStyle: {
     appearance: "none",
@@ -17,16 +15,12 @@ const styles = makeStyles({
     width: "50%",
   },
 });
-type Props = {
-  search: string;
-  setSearch : Dispatch<any>;
-}
-const Header: React.FC<Props> = ({search , setSearch}) => {
+
+const Header = () => {
   const classes = styles();
-  const handleChange = (e:React.FormEvent<HTMLInputElement>)=>{
-      console.log(e.currentTarget.value)
-      setSearch(e.currentTarget.value);
-  }
+  const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
+    console.log(e.currentTarget.value);
+  };
   const headerStyle = {
     color: "gray",
     textShadow: "rgb(137 133 133) 7px 6px 9px",
@@ -43,18 +37,12 @@ const Header: React.FC<Props> = ({search , setSearch}) => {
         marginBottom: "20px",
       }}
     >
-      <h1 data-test='main-title' style={headerStyle}>Bookmarks for Youtube Programming Tutorial</h1>
+      <h1 data-test="main-title" style={headerStyle}>
+        Bookmarks for Youtube Programming Tutorial
+      </h1>
       <Box sx={{ alignSelf: "center" }}>
-        <input
-          data-test = "search-box"
-          type="text"
-          placeholder="Search Title....."
-          className={classes.searchBarStyle}
-          value = {search}
-          onChange = {handleChange}
-          
-        />
-        <SearchIcon />
+        <input data-test="search-box" type="text" placeholder="Search Title....." className={classes.searchBarStyle} onChange={handleChange} />
+        <SearchIcon data-test="searchIcon" />
       </Box>
     </Box>
   );

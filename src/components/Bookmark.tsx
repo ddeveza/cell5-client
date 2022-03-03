@@ -1,4 +1,4 @@
-import { Box, Typography, Button, makeStyles } from "@material-ui/core";
+import { Box, Button, makeStyles, Typography } from "@material-ui/core";
 import axios from "axios";
 import { useState } from "react";
 import EditModalForm from "./Utility/EditModalForm";
@@ -16,7 +16,6 @@ interface Bookmarks {
 
 interface Bookmark {
   bookmark: Bookmarks;
-  setListOfBookmark: React.Dispatch<any>;
 }
 
 const bookmarkStyle = {
@@ -49,7 +48,7 @@ const styles = makeStyles({
 const handleOnclick = (link: string) => {
   window.location.href = link;
 };
-const BookMark: React.FC<Bookmark> = ({ bookmark, setListOfBookmark }) => {
+const BookMark: React.FC<Bookmark> = ({ bookmark }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const handleModalClick = () => {
     setIsOpen(!isOpen);
@@ -62,8 +61,8 @@ const BookMark: React.FC<Bookmark> = ({ bookmark, setListOfBookmark }) => {
       axios
         .get("http://localhost:3001/")
         .then(async (res) => {
-          if (res.data !== "Empty Data") setListOfBookmark(await res.data);
-          else setListOfBookmark([]);
+          /*  if (res.data !== "Empty Data") setListOfBookmark(await res.data);
+          else setListOfBookmark([]); */
         })
         .catch((err) => console.log(err));
     });
@@ -96,7 +95,7 @@ const BookMark: React.FC<Bookmark> = ({ bookmark, setListOfBookmark }) => {
         </Button>
       </Box>
 
-      <EditModalForm handleModalClick={handleModalClick} isOpen={isOpen} bookmark={bookmark} setListOfBookmark={setListOfBookmark} />
+      <EditModalForm handleModalClick={handleModalClick} isOpen={isOpen} bookmark={bookmark} />
     </Box>
   );
 };

@@ -1,15 +1,9 @@
-import React, { useState  ,Dispatch} from "react";
+import { Box, Button, Typography } from "@material-ui/core";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import { useState } from "react";
 import ModalForm from "./Utility/ModalForm";
-import { Button, Typography , Box } from "@material-ui/core";
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
-
-
-type Props = { setListOfBookmark: Dispatch<any>; };
-
-
-
-const AddBookMark: React.FC <Props>= ({setListOfBookmark} ) => {
+const AddBookMark = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleModalClick = () => {
@@ -17,13 +11,12 @@ const AddBookMark: React.FC <Props>= ({setListOfBookmark} ) => {
   };
 
   return (
-    <Box sx={{display:'flex', justifyContent:'space-around' ,marginBottom:'20px'}}>
+    <Box sx={{ display: "flex", justifyContent: "space-around", marginBottom: "20px" }}>
       <Button data-test="button-add" onClick={handleModalClick}>
-
-        <AddCircleOutlineIcon/>
+        <AddCircleOutlineIcon />
         <Typography>Add</Typography>
       </Button>
-      <ModalForm isOpen={isOpen} handleModalClick={handleModalClick}  setListOfBookmark={setListOfBookmark}/>
+      <ModalForm isOpen={isOpen} handleModalClick={handleModalClick} />
     </Box>
   );
 };

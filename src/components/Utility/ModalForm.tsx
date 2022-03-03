@@ -1,18 +1,11 @@
-import React, { useState, Dispatch } from "react";
-import axios from "axios";
-import { Modal, Button, TextField, Box, Typography, makeStyles } from "@material-ui/core";
+import { Box, Button, makeStyles, Modal, TextField, Typography } from "@material-ui/core";
+import React, { useContext, useState } from "react";
+import { BookmarkContext } from "../../context/BookmarkContext";
+import { VideoData } from "../../context/types/BookmarkType";
 
 interface ModalInterface {
   isOpen: boolean;
   handleModalClick: () => void;
-  setListOfBookmark: Dispatch<any>;
-}
-
-interface VideoData {
-  title: string;
-  link: string;
-  summary: string;
-  tag: string;
 }
 
 const styles = makeStyles({
@@ -28,7 +21,8 @@ const styles = makeStyles({
   },
 });
 
-const ModalForm: React.FC<ModalInterface> = ({ isOpen, handleModalClick, setListOfBookmark }) => {
+const ModalForm: React.FC<ModalInterface> = ({ isOpen, handleModalClick }) => {
+  const { addBookmark } = useContext(BookmarkContext);
   const [video, setVideo] = useState<VideoData>({
     title: "",
     link: "",
@@ -36,23 +30,7 @@ const ModalForm: React.FC<ModalInterface> = ({ isOpen, handleModalClick, setList
     tag: "#",
   });
   const handleSaveVideo = async () => {
-    await axios
-      .post("http://localhost:3001/", video)
-      .then((res) => {
-        setListOfBookmark((val: any) => {
-          return [res.data, ...val];
-        });
-
-        setVideo({
-          title: "",
-          link: "",
-          summary: "",
-          tag: "#",
-        });
-        return console.log("Successfully Save");
-      })
-      .catch((err) => console.log(err));
-
+    addBookmark(video);
     handleModalClick();
   };
   const handleChange = (e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -106,7 +84,17 @@ const ModalForm: React.FC<ModalInterface> = ({ isOpen, handleModalClick, setList
         <Box sx={formStyle}>
           <TextField data-test="text-title" className={classes.textField} id="outlined-basic" label="Title" variant="outlined" value={video.title} name="title" onChange={handleChange} />
           <TextField data-test="text-link" type="url" className={classes.textField} id="outlined-basic" label="Link" variant="outlined" value={video.link} name="link" onChange={handleChange} />
-          <TextField data-test="text-summary" className={classes.textField} id="outlined-multiline-static" label="Summary" multiline rows={5} value={video.summary} name="summary" onChange={handleChange} />
+          <TextField
+            data-test="text-summary"
+            className={classes.textField}
+            id="outlined-multiline-static"
+            label="Summary"
+            multiline
+            rows={5}
+            value={video.summary}
+            name="summary"
+            onChange={handleChange}
+          />
           <TextField data-test="text-tag" className={classes.textField} id="outlined-basic" label="Tag" variant="outlined" value={video.tag} name="tag" onChange={handleChange} />
         </Box>
         <Box sx={saveBtn}>

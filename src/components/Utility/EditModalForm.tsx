@@ -1,4 +1,4 @@
-import { Modal, Button, TextField, Box, Typography, makeStyles } from "@material-ui/core";
+import { Box, Button, makeStyles, Modal, TextField, Typography } from "@material-ui/core";
 import axios from "axios";
 import { useState } from "react";
 const styles = makeStyles({
@@ -29,10 +29,9 @@ type Props = {
   isOpen: boolean;
   handleModalClick: () => void;
   bookmark: Bookmarks;
-  setListOfBookmark: React.Dispatch<any>;
 };
 
-const EditModalForm: React.FC<Props> = ({ isOpen, handleModalClick, bookmark, setListOfBookmark }) => {
+const EditModalForm: React.FC<Props> = ({ isOpen, handleModalClick, bookmark }) => {
   const [video, setVideo] = useState<Bookmarks>({
     ...bookmark,
   });
@@ -58,7 +57,7 @@ const EditModalForm: React.FC<Props> = ({ isOpen, handleModalClick, bookmark, se
           .get("http://localhost:3001/")
           .then(async (res) => {
             // console.log(res);
-            if (res.data !== "Empty Data") setListOfBookmark(await res.data);
+            /*  if (res.data !== "Empty Data") setListOfBookmark(await res.data); */
           })
           .catch((err) => console.log(err));
 
@@ -111,7 +110,17 @@ const EditModalForm: React.FC<Props> = ({ isOpen, handleModalClick, bookmark, se
         <Box sx={formStyle}>
           <TextField data-test="text-title" className={classes.textField} id="outlined-basic" label="Title" variant="outlined" value={video.title} name="title" onChange={handleChange} />
           <TextField data-test="text-link" type="url" className={classes.textField} id="outlined-basic" label="Link" variant="outlined" value={video.link} name="link" onChange={handleChange} />
-          <TextField data-test="text-summary" className={classes.textField} id="outlined-multiline-static" label="Summary" multiline rows={5} value={video.summary} name="summary" onChange={handleChange} />
+          <TextField
+            data-test="text-summary"
+            className={classes.textField}
+            id="outlined-multiline-static"
+            label="Summary"
+            multiline
+            rows={5}
+            value={video.summary}
+            name="summary"
+            onChange={handleChange}
+          />
           <TextField data-test="text-tag" className={classes.textField} id="outlined-basic" label="Tag" variant="outlined" value={video.tag} name="tag" onChange={handleChange} />
         </Box>
         <Box sx={saveBtn} onClick={handleSaveVideo}>
